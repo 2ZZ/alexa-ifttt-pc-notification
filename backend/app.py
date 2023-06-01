@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import os
+import logging
 from flask import Flask, request, abort
 from paho.mqtt import publish
-import logging
 
 AUTH_TOKEN = os.environ.get('AUTH_TOKEN', '6136a6c5-619b-4554-bad8-5aef3ffa9aa7')
 HTTP_PORT = int(os.environ.get('HTTP_PORT', '8080'))
@@ -22,7 +22,7 @@ def generate_mqtt_message():
     auth_header = request.headers.get('Authorization')
     if auth_header != AUTH_TOKEN:
         logging.warning('Invalid Authorization header')
-        abort(403)  # Return a 403 Forbidden status code
+        abort(403)
     message = request.get_data().decode('utf-8')
     logging.info(f'Request payload: {message}')
     publish.single(topic=MQTT_TOPIC, payload=message, hostname=MQTT_BROKER, port=MQTT_PORT)
