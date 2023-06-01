@@ -1,0 +1,4 @@
+*/.venv
+pc-app/build
+pc-app/dist
+pc-app/alexa-ifttt-pc-notification.exe.spec
