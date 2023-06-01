@@ -30,4 +30,4 @@ def generate_mqtt_message():
 
 
 if __name__ == '__main__':
-    app.run(port=HTTP_PORT)
+    app.run(host='0.0.0.0', port=HTTP_PORT)
