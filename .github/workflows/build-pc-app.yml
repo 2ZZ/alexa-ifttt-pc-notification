@@ -2,6 +2,10 @@ name: Build PC App
 on:
   push:
 
+defaults:
+  run:
+    working-directory: pc-app
+
 jobs:
   build:
     runs-on: windows-latest
@@ -14,23 +18,17 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          path: pc-app
 
       - name: Create virtual environment
-        working-directory: pc-app
         run: python -m venv .venv
 
       - name: Activate virtual environment
-        working-directory: pc-app
         run: .\.venv\Scripts\activate
 
       - name: Install dependencies
-        working-directory: pc-app
         run: pip install -r requirements.txt
 
       - name: Run PyInstaller
-        working-directory: pc-app
         run: pyinstaller --onefile --name alexa-ifttt-pc-notification.exe app.py
 
       - name: Upload artifacts
