@@ -29,7 +29,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run PyInstaller
-        run: pyinstaller --onefile --name alexa-ifttt-pc-notification.exe app.py
+        run: pyinstaller --onefile --name alexa-ifttt-pc-notification.exe app.pyw
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2

@@ -1,7 +1,8 @@
 import os
+import threading
+import winsound
 import paho.mqtt.client as mqtt
 from win10toast import ToastNotifier
-import winsound
 
 MQTT_BROKER = os.environ.get('MQTT_BROKER', '192.168.1.61')
 MQTT_PORT = int(os.environ.get('MQTT_PORT', '1883'))
@@ -21,8 +22,15 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, msg):
-    print("Message received, showing toast.")
-    winsound.PlaySound(SOUND_EFFECT_PATH, winsound.SND_FILENAME)
+    print("Message received")
+
+    def play_sound():
+        print("Playing sound")
+        winsound.PlaySound(SOUND_EFFECT_PATH, winsound.SND_FILENAME)
+    sound_thread = threading.Thread(target=play_sound)
+    sound_thread.start()
+
+    print("Showing toast")
     toaster.show_toast(
         title=POPUP_TITLE,
         msg=POPUP_MESSAGE,
